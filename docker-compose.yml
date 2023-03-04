@@ -1,0 +1,12 @@
+version: '3.2'
+
+services:
+  python:
+    build:
+      context: .
+      dockerfile: Dockerfile.local
+    container_name: container_realstate
+    volumes:
+      - '.:/var/www'
+    ports:
+      - "5501:5501"
