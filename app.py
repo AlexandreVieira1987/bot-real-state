@@ -1,1 +1,4 @@
-print('Hello Bot Real State')
+from src.modules.search.SearchController import SearchController
+
+run = SearchController()
+run.execute()
