@@ -1,15 +1,15 @@
 from src.modules.search.useCase.LoadAllLinksUseCase import LoadAllLinksUseCase
-from src.modules.search.useCase.ReadLinkUseCase import ReadLinkUseCase
+from src.modules.search.useCase.ReadLinksUseCase import ReadLinksUseCase
 
 
 class SearchController():
 
     def execute(self):
         links = LoadAllLinksUseCase()
-        read = ReadLinkUseCase()
+        # read = ReadLinksUseCase()
 
         links.execute()
-        read.execute()
+        # read.execute()
 
 
     

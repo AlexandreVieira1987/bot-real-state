@@ -1,5 +1,6 @@
 from src.shared.BaseUseCase import BaseUseCase
 from selenium.webdriver.common.by import By
+from src.shared.providers.celery import queue_read_link
 
 class LoadAllLinksUseCase(BaseUseCase):
     
@@ -53,6 +54,8 @@ class LoadAllLinksUseCase(BaseUseCase):
             unique_links = list(set(hrefs))
             for href in unique_links:
                 file_links.write(href + '\n')
+                queue_read_link.delay(href)
+
         except Exception:
           print('error on save link')
     

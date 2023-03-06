@@ -1,7 +1,7 @@
 from src.shared.BaseUseCase import BaseUseCase
 from selenium.webdriver.common.by import By
 from bs4 import BeautifulSoup
-import string
+import time
 import pandas as pd
 
 class ReadLinkUseCase(BaseUseCase):
@@ -10,34 +10,26 @@ class ReadLinkUseCase(BaseUseCase):
         super().__init__()
     
 
-    def execute(self):
-        links = open('src/shared/database/links/for-sale.txt', 'r')
+    def execute(self, link, task_id):
         infos = []
 
-        count = 1
-        for link in links:
-            self.driver.get(link)
-            title, sub_title = self.title_sub_title()
-            area = self.area()
+        self.driver.get(link)
+        title, sub_title = self.title_sub_title()
+        area = self.area()
 
-            info = {
-              'area': area,
-              'title': title, 
-              'sub_title': sub_title,
-              'link': link,
-              'infos': self.infos()
-            }
+        info = {
+          'area': area,
+          'title': title, 
+          'sub_title': sub_title,
+          'link': link,
+          'infos': self.infos()
+        }
 
-            infos.append(info)
-
-            print(count)
-            count = count + 1
+        infos.append(info)
             
-
-
         df = pd.DataFrame(infos)
-        df.to_json('src/shared/database/links/infos.json')
-        df.to_parquet('src/shared/database/links/infos.parquet', engine='pyarrow', compression = 'gzip')
+        df.to_json('src/shared/database/links/' + str(task_id) + '.json')
+        # df.to_parquet('src/shared/database/links/infos.parquet', engine='pyarrow', compression = 'gzip')
 
         
 
@@ -56,24 +48,27 @@ class ReadLinkUseCase(BaseUseCase):
 
 
     def infos(self):
-        info_primary = self.driver.find_element(By.CLASS_NAME, 'info-primary')
-        itens_info = info_primary.get_attribute('innerHTML')
+        try:
+            info_primary = self.driver.find_element(By.CLASS_NAME, 'info-primary')
+            itens_info = info_primary.get_attribute('innerHTML')
 
-        soup = BeautifulSoup(itens_info, 'html.parser')
-        divs = soup.find_all('div')
+            soup = BeautifulSoup(itens_info, 'html.parser')
+            divs = soup.find_all('div')
 
-        infos = {}
-        for div in divs:
-            span = div.find('span').get_text()
-            table = span.maketrans('', '', string.digits)
-            text = span.translate(table)
+            infos = {}
+            for div in divs:
+                span = div.find('span').get_text()
+                table = span.maketrans('', '', string.digits)
+                text = span.translate(table)
 
-            numbers = [char for char in span if char.isdigit()]
+                numbers = [char for char in span if char.isdigit()]
 
-            if text != None:
-                infos[span] = ''.join(numbers)
+                if text != None:
+                    infos[span] = ''.join(numbers)
 
-        return infos
+            return infos
+        except Exception:
+            return {}
     
 
     def area(self):
