@@ -1,8 +1,8 @@
 from src.shared.BaseUseCase import BaseUseCase
 from selenium.webdriver.common.by import By
 from bs4 import BeautifulSoup
-import time
 import pandas as pd
+import string
 
 class ReadLinkUseCase(BaseUseCase):
     
@@ -29,7 +29,6 @@ class ReadLinkUseCase(BaseUseCase):
             
         df = pd.DataFrame(infos)
         df.to_json('src/shared/database/links/' + str(task_id) + '.json')
-        # df.to_parquet('src/shared/database/links/infos.parquet', engine='pyarrow', compression = 'gzip')
 
         
 
