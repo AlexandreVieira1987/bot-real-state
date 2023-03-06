@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile.local
     container_name: container_realstate
-    entrypoint: sh -c "celery -A tasks worker -l info -c 2"
+    entrypoint: sh -c "celery -A src.shared.providers.queue worker -l info -c 2"
     volumes:
       - '.:/var/www'
     ports:

@@ -1,6 +1,6 @@
 from src.shared.BaseUseCase import BaseUseCase
 from selenium.webdriver.common.by import By
-from src.shared.providers.celery import queue_read_link
+from src.shared.providers.queue.celery import queue_read_link
 
 class LoadAllLinksUseCase(BaseUseCase):
     
