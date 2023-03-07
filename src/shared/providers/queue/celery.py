@@ -4,13 +4,15 @@ import uuid
 import os
 
 redis_host = os.environ.get('REDIS_HOST', 'redis://localhost:6379/0')
+hour = os.environ.get('SCHEDULE_HOUR', 10)
+minutes = os.environ.get('SCHEDULE_MINUTES', 0)
 
 app = Celery('tasks', broker = redis_host, backend = redis_host, concurrency = 2)
 
 
 @app.on_after_configure.connect
 def setup_task(sender, **kwargs):
-    sender.add_periodic_task(crontab(minute = 0, hour = 10), queue_search_links)
+    sender.add_periodic_task(crontab(minute = minutes, hour = hour), queue_search_links)
 
 
 @app.task

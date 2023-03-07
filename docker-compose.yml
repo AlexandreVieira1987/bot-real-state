@@ -10,6 +10,13 @@ services:
     ports:
       - "5501:5501"
 
+
+  redis:
+    image: redis:6.2-bullseye
+    container_name: container_redis_realstate
+    ports: 
+      - "6380:6379"
+
 networks:
   default:
     external:
