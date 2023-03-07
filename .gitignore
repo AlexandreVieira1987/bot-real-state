@@ -7,3 +7,9 @@ __pycache__
 
 .env
 .vscode
+
+
+# Celery stuff
+celerybeat-schedule
+celerybeat-schedule.*
+celerybeat.pid

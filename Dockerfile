@@ -1,6 +1,6 @@
 FROM python:3.8
 
-WORKDIR /var/www
+WORKDIR /app
 
 RUN mkdir __logger
 
@@ -24,4 +24,4 @@ COPY requirements.txt requirements.txt
 
 RUN pip install -r requirements.txt
 
-CMD [ "python3", "app.py" ]
+CMD celery -A src.shared.providers.queue worker -l info -c 2 --beat --without-heartbeat

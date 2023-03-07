@@ -2,13 +2,11 @@ version: '3.2'
 
 services:
   python:
-    build:
-      context: .
-      dockerfile: Dockerfile.local
+    build: .
     container_name: container_realstate
-    entrypoint: sh -c "celery -A src.shared.providers.queue worker -l info -c 2"
+    # entrypoint: sh -c "celery -A src.shared.providers.queue worker -l info -c 2"
     volumes:
-      - '.:/var/www'
+      - '.:/app'
     ports:
       - "5501:5501"
 
