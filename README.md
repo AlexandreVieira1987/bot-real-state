@@ -2,28 +2,29 @@
 
 This project search by grounds in real estate stores of Araranguá city in Santa Catarina State
 
+### Running Locally  (tested only ububtu distro)
 
-### Running Locally
+1 - Create file .env and define values (use .env.example)
 
-1 - create virtual env
+2 - create virtual env
 
 ```bash
 python -m venv venv
 ```
 
-2 - active virtual env
+3 - active virtual env
 
 ```bash
 source keyword/bin/activate
 ```
 
-3 - Install packages
+4 - Install packages
 
 ```bas
 pip install -r requirements.txt
 ```
 
-4 Run
+5 Run
 
 ```bash
 python app.py
@@ -31,7 +32,9 @@ python app.py
 
 ### Running in Docker
 
-1 -  Run docker-compose
+1 - Create file .env and define values (use .env.example)
+
+2 -  Run docker-compose
 
 ```bash
 docker-compose up --build
