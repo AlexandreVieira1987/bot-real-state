@@ -27,7 +27,7 @@ pip install -r requirements.txt
 5 Run
 
 ```bash
-python app.py
+celery -A src.shared.providers.queue worker -l info -c 2 --beat --without-heartbeat
 ```
 
 ### Running in Docker
